@@ -1,9 +1,9 @@
 const express = require('express');
-const { getAllTodos } = require('../controllers/todoController');
+const { getAllTodos, createTodo } = require('../controllers/todoController');
 
 const router = express.Router();
 
-// get all todos
 router.get('/:userEmail', getAllTodos);
+router.post('/', createTodo);
 
 module.exports = router;

@@ -4,8 +4,9 @@ import Button from '@mui/material/Button';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CustomModal from './CustomModal';
 
-const ListHeader = ({ listName }) => {
+const ListHeader = ({ listName, getData }) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+
   const signOut = () => {
     console.log('sign out');
   };
@@ -44,7 +45,12 @@ const ListHeader = ({ listName }) => {
         >
           <LogoutIcon />
         </Button>
-        <CustomModal open={isModalOpen} handleClose={handleClose} />
+        <CustomModal
+          mode={'create'}
+          open={isModalOpen}
+          handleClose={handleClose}
+          getData={getData}
+        />
       </div>
     </div>
   );

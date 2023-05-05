@@ -19,7 +19,47 @@ const style = {
   borderRadius: '12px',
 };
 
-export default function CustomModal({ open, handleClose }) {
+export default function CustomModal({
+  mode,
+  open,
+  handleClose,
+  task,
+  getData,
+}) {
+  const editMode = mode === 'edit' ? true : false;
+
+  const [data, setData] = React.useState({
+    user_email: editMode ? task.user_email : 'adir@test.com',
+    title: editMode ? task.title : null,
+    progress: editMode ? task.progress : 50,
+    date: editMode ? '' : new Date(),
+  });
+
+  const postData = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:8000/todos/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        console.log('success');
+        setData({});
+        handleClose();
+        getData();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((data) => ({ ...data, [name]: value }));
+  };
   return (
     <div>
       <Modal
@@ -45,10 +85,9 @@ export default function CustomModal({ open, handleClose }) {
             component="h2"
             mb={2}
           >
-            Let's create your task!
+            Let's {mode} your task!
           </Typography>
           <form
-            onSubmit={''}
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -57,9 +96,23 @@ export default function CustomModal({ open, handleClose }) {
           >
             <TextField
               label="Task Name"
-              value={''}
-              onChange={''}
+              value={data.title}
               fullWidth
+              name="title"
+              onChange={handleChange}
+              mb={2}
+            />
+            <label style={{ marginTop: '20px' }} htmlFor="range">
+              Drag to select your current progress
+            </label>
+            <input
+              type="range"
+              id="range"
+              name="progress"
+              min="0"
+              max="100"
+              value={data.progress}
+              onChange={handleChange}
               mb={2}
             />
             <Button
@@ -70,6 +123,7 @@ export default function CustomModal({ open, handleClose }) {
               type="submit"
               variant="outlined"
               color="primary"
+              onClick={editMode ? '' : postData}
             >
               SUBMIT
             </Button>
