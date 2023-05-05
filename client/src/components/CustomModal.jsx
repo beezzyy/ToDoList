@@ -2,6 +2,10 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const style = {
   position: 'absolute',
@@ -11,7 +15,7 @@ const style = {
   width: 500,
   padding: '40px',
   bgcolor: 'background.paper',
-  boxShadow: 24,
+  boxShadow: 'rgba(0, 0, 0, 0.05) 0 6px 24px 0, rgba(0, 0, 0, 0.08) 0 0 0 1px',
   borderRadius: '12px',
 };
 
@@ -25,12 +29,51 @@ export default function CustomModal({ open, handleClose }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+          <IconButton
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <Typography
+            sx={{ textAlign: 'center' }}
+            variant="h5"
+            component="h2"
+            mb={2}
+          >
+            Let's create your task!
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <form
+            onSubmit={''}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <TextField
+              label="Task Name"
+              value={''}
+              onChange={''}
+              fullWidth
+              mb={2}
+            />
+            <Button
+              sx={{
+                margin: '10px',
+                width: '100%',
+              }}
+              type="submit"
+              variant="outlined"
+              color="primary"
+            >
+              SUBMIT
+            </Button>
+          </form>
         </Box>
       </Modal>
     </div>
