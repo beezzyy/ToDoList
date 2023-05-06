@@ -42,3 +42,15 @@ exports.updateTodo = async (req, res) => {
     console.error(err);
   }
 };
+
+exports.deleteTodo = async (req, res) => {
+  const id = req.params.taskId;
+  try {
+    const deletedTodo = await pool.query('DELETE FROM todos WHERE id = $1', [
+      id,
+    ]);
+    res.json(deletedTodo);
+  } catch (err) {
+    console.error(err);
+  }
+};

@@ -16,6 +16,20 @@ const ListItem = ({ task, getData }) => {
   const handleClose = () => {
     setIsModalOpen(false);
   };
+
+  const deleteItem = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/todos/${task.id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        getData();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <li className="list-item">
       <div className="info-container">
@@ -42,9 +56,10 @@ const ListItem = ({ task, getData }) => {
             minWidth: '40px',
             borderRadius: '12px',
           }}
+          onClick={deleteItem}
         >
           <DeleteOutlinedIcon />
-        </Button>{' '}
+        </Button>
         <CustomModal
           mode={'edit'}
           open={isModalOpen}
