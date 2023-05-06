@@ -49,7 +49,12 @@ export default function CustomModal({
       });
       if (response.ok) {
         console.log('success');
-        setData({});
+        setData({
+          user_email: cookies.Email,
+          title: null,
+          progress: 50,
+          date: new Date(),
+        });
         handleClose();
         getData();
       }
@@ -140,6 +145,7 @@ export default function CustomModal({
               onChange={handleChange}
               mb={2}
             />
+
             <Button
               sx={{
                 margin: '10px',
