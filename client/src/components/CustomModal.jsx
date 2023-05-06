@@ -40,16 +40,13 @@ export default function CustomModal({
   const postData = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `http://todolist-backend-x988.onrender.com/todos/`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(`http://localhost:8000/todos/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
       if (response.ok) {
         console.log('success');
         setData({
@@ -72,16 +69,13 @@ export default function CustomModal({
       if (!task.id) {
         throw new Error('No task id');
       }
-      const response = await fetch(
-        `http://todolist-backend-x988.onrender.com/todos/${task.id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(`http://localhost:8000/todos/${task.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
       if (response.ok) {
         console.log('success');
         handleClose();

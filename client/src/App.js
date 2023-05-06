@@ -12,9 +12,7 @@ function App() {
 
   const getData = async () => {
     try {
-      const response = await fetch(
-        `http://todolist-backend-x988.onrender.com/todos/${userEmail}`
-      );
+      const response = await fetch(`http://localhost:8000/todos/${userEmail}`);
       const data = await response.json();
       setTasks(data);
     } catch (err) {
