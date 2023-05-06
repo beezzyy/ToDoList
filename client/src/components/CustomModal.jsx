@@ -32,7 +32,7 @@ export default function CustomModal({
     user_email: editMode ? task.user_email : 'adir@test.com',
     title: editMode ? task.title : null,
     progress: editMode ? task.progress : 50,
-    date: editMode ? '' : new Date(),
+    date: editMode ? task.date : new Date(),
   });
 
   const postData = async (e) => {
@@ -48,6 +48,29 @@ export default function CustomModal({
       if (response.ok) {
         console.log('success');
         setData({});
+        handleClose();
+        getData();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const editData = async (e) => {
+    e.preventDefault();
+    try {
+      if (!task.id) {
+        throw new Error('No task id');
+      }
+      const response = await fetch(`http://localhost:8000/todos/${task.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        console.log('success');
         handleClose();
         getData();
       }
@@ -123,7 +146,7 @@ export default function CustomModal({
               type="submit"
               variant="outlined"
               color="primary"
-              onClick={editMode ? '' : postData}
+              onClick={editMode ? editData : postData}
             >
               SUBMIT
             </Button>

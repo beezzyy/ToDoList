@@ -27,3 +27,18 @@ exports.createTodo = async (req, res) => {
     console.error(err);
   }
 };
+
+exports.updateTodo = async (req, res) => {
+  const id = req.params.taskId;
+  const { user_email, title, progress, date } = req.body;
+
+  try {
+    const updatedTodo = await pool.query(
+      'UPDATE todos SET user_email = $1,  title = $2, progress = $3, date = $4 WHERE id = $5 RETURNING *',
+      [user_email, title, progress, date, id]
+    );
+    res.json(updatedTodo);
+  } catch (err) {
+    console.error(err);
+  }
+};
