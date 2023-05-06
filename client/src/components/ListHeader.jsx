@@ -3,12 +3,17 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Button from '@mui/material/Button';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CustomModal from './CustomModal';
+import { useCookies } from 'react-cookie';
 
 const ListHeader = ({ listName, getData }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   const signOut = () => {
     console.log('sign out');
+    removeCookie('Email');
+    removeCookie('AuthToken');
+    window.location.reload();
   };
 
   const handleAddClick = () => {
