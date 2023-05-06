@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { useCookies } from 'react-cookie';
 
 const style = {
   position: 'absolute',
@@ -26,10 +27,11 @@ export default function CustomModal({
   task,
   getData,
 }) {
+  const [cookies, setCookie, removeCookie] = useCookies(null);
   const editMode = mode === 'edit' ? true : false;
 
   const [data, setData] = React.useState({
-    user_email: editMode ? task.user_email : 'adir@test.com',
+    user_email: editMode ? task.user_email : cookies.Email,
     title: editMode ? task.title : null,
     progress: editMode ? task.progress : 50,
     date: editMode ? task.date : new Date(),
