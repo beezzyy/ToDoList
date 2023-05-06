@@ -21,11 +21,14 @@ const Auth = () => {
       setError('Make sure passwords match!');
       return;
     }
-    const response = await fetch(`http://localhost:8000/${endpoint}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await fetch(
+      `https://todolist-backend-x988.onrender.com/${endpoint}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      }
+    );
     const data = await response.json();
 
     if (data.detail) {
